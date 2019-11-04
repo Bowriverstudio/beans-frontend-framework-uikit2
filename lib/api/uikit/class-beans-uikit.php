@@ -60,7 +60,7 @@ final class _Beans_Uikit {
 		 * @param array $components An array of UIkit style component files.
 		 */
 		$styles = apply_filters( 'beans_uikit_euqueued_styles', $this->register_less_components() );
-
+//ddd($styles);
 		// If there are no styles to compile, bail out.
 		if ( empty( $styles ) ) {
 			return;
@@ -95,7 +95,7 @@ final class _Beans_Uikit {
 		 * @param array $components An array of UIkit script component files.
 		 */
 		$scripts = apply_filters( 'beans_uikit_euqueued_scripts', $this->register_js_components() );
-
+//ddd($scripts);
 		// If there are no scripts to compile, bail out.
 		if ( empty( $scripts ) ) {
 			return;

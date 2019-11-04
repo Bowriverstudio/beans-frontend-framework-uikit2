@@ -30,32 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit( 'Hello, Hello, Hello, what\'s going on here then?' );
 }
 
-register_activation_hook( __FILE__, __NAMESPACE__ . '\deactivate_when_beans_not_activated_theme' );
-add_action( 'switch_theme', __NAMESPACE__ . '\deactivate_when_beans_not_activated_theme' );
-/**
- * If Beans is not the activated theme, deactivate this plugin and pop a die message when not switching themes.
- *
- * @since 1.0.0
- *
- * @return void
- */
-function deactivate_when_beans_not_activated_theme() {
-   // @TODO ADD logic here
-	// If Beans is the active theme, bail out.
-//	$theme = wp_get_theme();
-//	if ( in_array( $theme->template, array( 'beans', 'tm-beans', 'Beans' ), true ) ) {
-//		return;
-//	}
-//
-//	deactivate_plugins( plugin_basename( __FILE__ ) );
-//
-//	if ( current_filter() !== 'switch_theme' ) {
-//		$message = __( 'Sorry, you can\'t activate this plugin unless the <a href="https://www.getbeans.io" target="_blank">Beans</a> framework is installed and a child theme is activated.', 'beans-visual-hook-guide' );
-//		wp_die( wp_kses_post( $message ) );
-//	}
-}
-
-add_action( 'beans_init', __NAMESPACE__.'\beans_includes_assests' );
+add_action( 'beans_init', __NAMESPACE__.'\beans_includes_assets' );
 /**
  * Include framework files.
  *
@@ -64,7 +39,7 @@ add_action( 'beans_init', __NAMESPACE__.'\beans_includes_assests' );
  *
  * @return void
  */
-function beans_includes_assests() {
+function beans_includes_assets() {
     $uikit_api_path = ABSPATH . 'wp-content/plugins/beans-uikit2/assets/';
     require_once plugin_dir_path(__FILE__) . 'assets/assets.php';
 }
@@ -79,17 +54,26 @@ add_action( 'plugin_loaded', __NAMESPACE__.'\define_constants');
  */
 function define_constants() {
 
-    // Required to ensure a frontend framework is loaded.
-    define( 'BEANS_FRONTEND_FRAMEWORK', 'uikit2' );
-    define( 'BEANS_FRONTEND_FRAMEWORK_BASE_URL', plugin_dir_url(__FILE__) );
+    if (!defined('BEANS_FRONTEND_FRAMEWORK')) {
+        // Required to ensure a frontend framework is loaded.
+        define( 'BEANS_FRONTEND_FRAMEWORK', 'uikit2' );
+        define( 'BEANS_FRONTEND_FRAMEWORK_BASE_URL', plugin_dir_url(__FILE__) );
 
-    // Used by the Beans Framework.
-    define( 'BEANS_RENDER_PATH', plugin_dir_path(__FILE__) . 'lib/render/' );
-    define( 'BEANS_TEMPLATES_PATH', plugin_dir_path(__FILE__) . 'lib/templates/' );
+        // Used by the Beans Framework.
+        define( 'BEANS_RENDER_PATH', plugin_dir_path(__FILE__) . 'lib/render/' );
+        define( 'BEANS_TEMPLATES_PATH', plugin_dir_path(__FILE__) . 'lib/templates/' );
 
-//
-    // Used Internally within this plugin
-    define( 'BEANS_CSSFRAMEWORK_PATH', plugin_dir_path(__FILE__) . 'lib/api/uikit/' );
+        // Used Internally within this plugin
+        define( 'BEANS_CSSFRAMEWORK_PATH', plugin_dir_path(__FILE__) . 'lib/api/uikit/' );
+
+
+        define( 'BEANS_ASSETS_URL', BEANS_FRONTEND_FRAMEWORK_BASE_URL . 'assets/' );
+        define( 'BEANS_LESS_URL', BEANS_ASSETS_URL . 'less/' );
+        define( 'BEANS_JS_URL', BEANS_ASSETS_URL . 'js/' );
+        define( 'BEANS_IMAGE_URL', BEANS_ASSETS_URL . 'images/' );
+
+    }
+
 }
 
 
