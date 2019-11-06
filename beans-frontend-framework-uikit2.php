@@ -97,8 +97,6 @@ function beans_includes()
     require_once BEANS_RENDER_PATH . 'menu.php';
 }
 
-
-
 add_action('beans_after_load_api', __NAMESPACE__.'\add_custom_css_framework');
 /**
  * Load css framework dependencies.
@@ -108,6 +106,7 @@ add_action('beans_after_load_api', __NAMESPACE__.'\add_custom_css_framework');
  * @return null
  */
 function add_custom_css_framework(){
+    require_once plugin_dir_path(__FILE__).'lib/api/layout/functions.php';
     require_once plugin_dir_path(__FILE__).'lib/api/uikit/class-beans-uikit.php';
     require_once plugin_dir_path(__FILE__).'lib/api/uikit/functions.php';
 }
